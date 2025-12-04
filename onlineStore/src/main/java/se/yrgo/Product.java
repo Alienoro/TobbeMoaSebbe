@@ -104,6 +104,19 @@ public class Product {
         }
         this.productQuantity = productQuantity;
     }
+    public void reduceStock(int amount){
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be positive.");
+        }
+        if (amount > productQuantity) {
+            throw new IllegalArgumentException("Amount cannot be greater than the quantity.");
+        }
+        productQuantity -= amount;
+    }
+//    public double buy(int amount){
+//        reduceStock(amount);
+//        return productPrice * amount;
+//    }
     /**
      * Returns a string representation of the product.
      * @return a string describing the product
