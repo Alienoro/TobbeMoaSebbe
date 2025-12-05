@@ -1,25 +1,139 @@
 package se.yrgo;
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        List<Product> products = createProducts();
 
-        ArrayList<Product> products = new ArrayList<>();
+        try (Scanner sc = new Scanner(System.in)) {
+            System.out.println("\nVälkommen till Java25 Livs!\n");
+            System.out.println("Vänligen skriv in din kundinfo: ");
 
-        addProduct(products);
+            String name = Customer.readInput(sc, "Namn");
+            String email = Customer.readInput(sc, "Email");
+            int id = (int) (Math.random() * 10) + 1;
 
-        for (Product p : products) {
-            System.out.println(p);
+            Customer customer = new Customer(id, name, email);
+            ShoppingCart shoppingCart = new ShoppingCart();
+
+            printProducts(products);
+
+            chooseProduct(sc, products, shoppingCart);
+
+            System.out.println("Kundvagn: ");
+
+            printShoppingCart(shoppingCart);
+            double totalPrice = shoppingCart.calculateTotalPrice();
+            System.out.println("Total: " + totalPrice + "kr\n");
+
+            while (true) {
+                System.out.print("Vill du betala? (ja/nej): ");
+                String answer = sc.nextLine();
+                if (yesOrNo(answer)) {
+                    break;
+                }
+            }
+
+            customer.placeOrder(shoppingCart.getShoppingCart());
+
+            while (true) {
+                System.out.print("Vill du se din totala orderhistorik? (ja/nej): ");
+                String answer = sc.nextLine();
+                if (yesOrNo(answer)) {
+                    break;
+                }
+            }
+
+            customer.viewOrderHistory();
+
+            System.out.println("Programmet avslutas");
         }
     }
 
-    public static void addProduct(ArrayList<Product> products) {
-        products.add(new Product(1, "Banana", 9.90, 100));
-        products.add(new Product(2, "Apple", 8.80, 200));
-        products.add(new Product(3, "Orange", 8.80, 120));
-        products.add(new Product(4, "Pineapple", 12.50, 100));
-        products.add(new Product(5, "Pear", 7.20, 90));
+    public static boolean yesOrNo(String answer) {
+        if (answer.equalsIgnoreCase("ja")) {
+            return true;
+        } else if (answer.equalsIgnoreCase("nej")) {
+            System.out.println("Avslutar");
+            System.exit(0);
+        } else {
+            System.out.println("Felaktig inmatning");
+        }
+        return false;
+    }
+
+    public static void printProducts(List<Product> products) {
+        for (Product p : products) {
+            System.out.println("Produkt: " + p.getProductName());
+            System.out.println("Pris: " + p.getProductPrice() + "kr");
+            System.out.println("ID: " + p.getProductID());
+            System.out.println();
+        }
+    }
+
+    public static void printShoppingCart(ShoppingCart shoppingCart) {
+        for (Product p : shoppingCart.getShoppingCart()) {
+            System.out.println("Produkt: " + p.getProductName() + " (" + p.getProductPrice() + "kr)");
+        }
+    }
+
+    public static void chooseProduct(Scanner sc, List<Product> products, ShoppingCart shoppingCart) {
+        System.out.println("Välj din vara genom att skriva produkt ID! Skriv 0 för att gå vidare till kassan.");
+        while (true) {
+            System.out.print("Produkt ID: ");
+
+            String input = sc.nextLine();
+            int item;
+            try {
+                item = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Felaktig inmatning, ange en siffra");
+                continue;
+            }
+
+            if (item == 0) {
+                System.out.println("Avslutar\n");
+                break;
+            }
+
+            Product found = null;
+            for (Product p : products) {
+                if (p.getProductID() == item) {
+                    found = p;
+                    break;
+                }
+            }
+
+            if (found == null) {
+                System.out.println("Kunde inte hitta den produkten");
+                continue;
+            }
+
+            if (shoppingCart.addProduct(found)) {
+                System.out.println("Du lade till " + found.getProductName());
+            } else {
+                System.out.println("Produkten lades ej till");
+            }
+
+        }
+    }
+
+    public static List<Product> createProducts() {
+        List<Product> products = new ArrayList<>();
+        products.add(new Product(1, "Äpple", 9.90, 1));
+        products.add(new Product(2, "Banan", 9.90, 1));
+        products.add(new Product(3, "Mjölk", 14.90, 1));
+        products.add(new Product(4, "Bröd", 21.90, 1));
+        products.add(new Product(5, "Ägg", 29.90, 1));
+        products.add(new Product(6, "Kaffe", 84.90, 1));
+        products.add(new Product(7, "Smör", 44.90, 1));
+        products.add(new Product(8, "Ost", 54.90, 1));
+        products.add(new Product(9, "Juice", 24.90, 1));
+        products.add(new Product(10, "Tomat", 2.90, 1));
+
+        return products;
     }
 }
