@@ -1,8 +1,5 @@
 package se.yrgo;
 
-/**
- * Represents a product in the system.
- */
 public class Product {
     private int productID;
     private String productName;
@@ -113,22 +110,17 @@ public class Product {
         }
         productQuantity -= amount;
     }
-//    public double buy(int amount){
-//        reduceStock(amount);
-//        return productPrice * amount;
-//    }
     /**
      * Returns a string representation of the product.
      * @return a string describing the product
      */
     @Override
     public String toString() {
-        return "Product Details:\n" +
+        return "\nProdukt:\n" +
                 "----------------\n" +
                 "ID       : " + productID + "\n" +
                 "Name     : " + productName + "\n" +
                 "Price    : " + productPrice + " kr\n" +
-                "Quantity : " + productQuantity + "\n" +
                 "Total    : " + totalPrice() + " kr";
     }
 }
