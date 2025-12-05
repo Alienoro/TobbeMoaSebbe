@@ -1,8 +1,6 @@
-package main.java.se.yrgo;
+package se.yrgo;
 
 import org.junit.jupiter.api.Test;
-
-import se.yrgo.Product;
 
 import static org.junit.jupiter.api.Assertions.*;
 
