@@ -7,22 +7,22 @@ public class ShoppingCart {
     private List<Product> shoppingCart;
 
     public ShoppingCart() {
-        this.shoppingCart = new ArrayList<>(shoppingCart);
+        this.shoppingCart = new ArrayList<>();
     }
 
     public List<Product> getShoppingCart() {
         return new ArrayList<>(shoppingCart);
     }
 
-    public void addProduct(Product product) {
-        if (product != null) {
-            shoppingCart.add(product);
+    public boolean addProduct(Product product) {
+        if (product == null) {
+            System.out.println("Kunde inte hitta produkten");
+            return false;
         }
+        shoppingCart.add(product);
+        return true;
     }
 
-    public void removeProduct(Product product) {
-        shoppingCart.remove(product);
-    }
 
     public double calculateTotalPrice() {
         double sum = 0;
@@ -33,11 +33,4 @@ public class ShoppingCart {
 
         return sum;
     }
-
-    public void listProducts() {
-        for (Product product : shoppingCart) {
-            System.out.println(product);
-        }
-    }
-
 }
