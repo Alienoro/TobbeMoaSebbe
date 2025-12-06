@@ -1,24 +1,34 @@
 package se.yrgo;
-
+/**
+ * Represents a product in a store.
+ * Each product has a unique ID, a name, and a price per unit.
+ * Provides methods to access and modify product details,
+ * and to calculate total price for a given quantity.
+ * Input values are validated and exceptions are thrown for invalid parameters.
+ */
 public class Product {
     private int productID;
     private String productName;
     private double productPrice;
 
     /**
-     * Creates a new product.
-     * @param productID Unique productID, must be > 0
-     * @param productName Name of product (cannot be null)
-     * @param productPrice Price per unit (must be >= 0)
+     * Creates a new product with the specified ID, name, and price.
+     * @param productID Unique productID, must be greater than 0.
+     * @param productName Name of product, cannot be null or blank.
+     * @param productPrice Price per unit, must be greater than or equal to 0.
+     * @throws IllegalArgumentException if any of the parameters are invalid
      */
     public Product(int productID, String productName, double productPrice) {
         setProductID(productID);
         setProductName(productName);
         setProductPrice(productPrice);
     }
+
     /**
-     * Calculates total price based on quantity and unit price
-     * @return Total price
+     * Calculates the total price based on quantity and unit price.
+     * @param quantity Number of units, must be greater than or equal to 0.
+     * @return Total price for the given quantity.
+     * @throws IllegalArgumentException if quantity is negative.
      */
     public double totalPrice(int quantity) {
         if (quantity < 0){
@@ -26,19 +36,17 @@ public class Product {
         }
         return productPrice * quantity;
     }
-
     /**
-     * Gets the product ID
-     * @return Unique product ID
+     * Return the unique product ID.
+     * @return Product ID.
      */
     public int getProductID() {
         return productID;
     }
-
     /**
      * Sets the product ID
-     * @param productID Must be > 0
-     * @throws IllegalArgumentException if productID <= 0
+     * @param productID Must be greater than 0.
+     * @throws IllegalArgumentException if productID is less than or equal to 0.
      */
     public void setProductID(int productID) {
         if (productID <= 0) {
@@ -47,17 +55,17 @@ public class Product {
         this.productID = productID;
     }
     /**
-     * Gets the product name
-     * @return The product name
+     * Returns the product name.
+     * @return The product name.
      */
     public String getProductName() {
         return productName;
     }
 
     /**
-     * Sets the product name
-     * @param productName Cannot be null or empty
-     * @throws IllegalArgumentException if productName is null or blank
+     * Sets the product name.
+     * @param productName Name of product, cannot be null or blank.
+     * @throws IllegalArgumentException if productName is null or blank.
      */
     public void setProductName(String productName) {
         if (productName == null || productName.isBlank()) {
@@ -66,16 +74,16 @@ public class Product {
         this.productName = productName;
     }
     /**
-     * Gets the product price.
-     * @return the price per unit
+     * Returns the price per unit of the product.
+     * @return the price per unit.
      */
     public double getProductPrice() {
         return productPrice;
     }
     /**
-     * Sets the product price.
-     * @param productPrice must be >= 0
-     * @throws IllegalArgumentException if productPrice < 0
+     * Sets the price per unit of the product.
+     * @param productPrice Must be greater than or equal to 0.
+     * @throws IllegalArgumentException if productPrice negative, because a product cannot have a negative pricing.
      */
     public void setProductPrice(double productPrice) {
         if (productPrice < 0) {
@@ -85,7 +93,7 @@ public class Product {
     }
     /**
      * Returns a string representation of the product.
-     * @return a string describing the product
+     * @return a string describing the product.
      */
     @Override
     public String toString() {
