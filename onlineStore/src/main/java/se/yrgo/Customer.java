@@ -3,29 +3,60 @@ package se.yrgo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Customer {
 
     private int customerID;
     private String name;
     private String email;
-    private List<List<Product>> orderHistory = new ArrayList<>();
+    private List<Orders> orders = new ArrayList<>();
 
     public Customer(int customerID, String name, String email) {
         this.customerID = customerID;
         this.name = name;
         this.email = email;
+
     }
 
-    public void placeOrder(List<Product> order) {
-        orderHistory.add(order);
+
+    public void placeOrder(List<Product> products) {
+        String orderID = UUID.randomUUID().toString();
+        Orders order = new Orders(orderID, products);
+        this.orders.add(order);
+    }
+
+    public List<Orders> orderHistory() {
+        return this.orders;
+    }
+
+    public static class Orders {
+        private String orderID;
+        private List<Product> productsOrdered;
+
+        public Orders(String orderID, List<Product> productsOrdered) {
+            this.orderID = orderID;
+            this.productsOrdered = productsOrdered; // new ArrayList<>(products);
+        }
+
+        public List<Product> getproductsOrdered() {
+            return productsOrdered;
+        }
+
+        public String getOrderID() {
+            return orderID;
+        }
     }
 
     public void viewOrderHistory() {
-        for (List<Product> order : orderHistory) {
-            for (Product p : order) {
-                System.out.println(p);
+        List<Orders> orders = this.orderHistory();
+        for (Orders order : orders) {
+            System.out.println("This is your Order-ID: " + order.getOrderID());
+            for (Product orderProducts : order.getproductsOrdered()) {
+                System.out.println(orderProducts);
+
             }
+
         }
     }
 
@@ -54,4 +85,3 @@ public class Customer {
         return "Customer [customerID=" + customerID + ", name=" + name + ", email=" + email + "]";
     }
 }
-
