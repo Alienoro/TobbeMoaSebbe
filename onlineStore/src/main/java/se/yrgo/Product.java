@@ -4,27 +4,27 @@ public class Product {
     private int productID;
     private String productName;
     private double productPrice;
-    private int productQuantity;
 
     /**
      * Creates a new product.
      * @param productID Unique productID, must be > 0
      * @param productName Name of product (cannot be null)
-     * @param productPrice Price per unit (must be > 0)
-     * @param productQuantity Quantity in stock (must be > 0)
+     * @param productPrice Price per unit (must be >= 0)
      */
-    public Product(int productID, String productName, double productPrice, int productQuantity) {
+    public Product(int productID, String productName, double productPrice) {
         setProductID(productID);
         setProductName(productName);
         setProductPrice(productPrice);
-        setProductQuantity(productQuantity);
     }
     /**
      * Calculates total price based on quantity and unit price
      * @return Total price
      */
-    public double totalPrice() {
-        return productPrice * productQuantity;
+    public double totalPrice(int quantity) {
+        if (quantity < 0){
+            throw new IllegalArgumentException("Invalid quantity");
+        }
+        return productPrice * quantity;
     }
 
     /**
@@ -84,33 +84,6 @@ public class Product {
         this.productPrice = productPrice;
     }
     /**
-     * Gets the quantity in stock.
-     * @return quantity available
-     */
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-    /**
-     * Sets the quantity in stock.
-     * @param productQuantity must be >= 0
-     * @throws IllegalArgumentException if productQuantity < 0
-     */
-    public void setProductQuantity(int productQuantity) {
-        if (productQuantity < 0) {
-            throw new IllegalArgumentException("Quantity cannot be negative.");
-        }
-        this.productQuantity = productQuantity;
-    }
-    public void reduceStock(int amount){
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be positive.");
-        }
-        if (amount > productQuantity) {
-            throw new IllegalArgumentException("Amount cannot be greater than the quantity.");
-        }
-        productQuantity -= amount;
-    }
-    /**
      * Returns a string representation of the product.
      * @return a string describing the product
      */
@@ -120,7 +93,6 @@ public class Product {
                 "----------------\n" +
                 "ID       : " + productID + "\n" +
                 "Name     : " + productName + "\n" +
-                "Price    : " + productPrice + " kr\n" +
-                "Total    : " + totalPrice() + " kr";
+                "Price    : " + productPrice + " kr\n";
     }
 }
