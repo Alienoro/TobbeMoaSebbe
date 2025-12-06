@@ -23,7 +23,9 @@ public class Customer {
 
     public void viewOrderHistory() {
         for (List<Product> order : orderHistory) {
-            System.out.println(order);
+            for (Product p : order) {
+                System.out.println(p);
+            }
         }
     }
 
