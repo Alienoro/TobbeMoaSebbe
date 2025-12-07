@@ -23,11 +23,11 @@ public class Main {
 
             chooseProduct(sc, products, shoppingCart);
 
-            System.out.println("Kundvagn: ");
+            System.out.println("\nKundvagn: ");
 
             printShoppingCart(shoppingCart);
             double totalPrice = shoppingCart.calculateTotalPrice();
-            System.out.println("Total: " + totalPrice + "kr\n");
+            System.out.println("\nTotal: " + totalPrice + "kr\n");
 
             while (true) {
                 System.out.print("Vill du betala? (ja/nej): ");
@@ -49,7 +49,7 @@ public class Main {
 
             customer.viewOrderHistory();
 
-            System.out.println("Programmet avslutas");
+            System.out.println("Välkommen tillbaka nästa gång!");
         }
     }
 
@@ -57,7 +57,7 @@ public class Main {
         if (answer.equalsIgnoreCase("ja")) {
             return true;
         } else if (answer.equalsIgnoreCase("nej")) {
-            System.out.println("Avslutar");
+            System.out.println("\nVälkommen tillbaka nästa gång!");
             System.exit(0);
         } else {
             System.out.println("Felaktig inmatning");
@@ -67,21 +67,19 @@ public class Main {
 
     public static void printProducts(List<Product> products) {
         for (Product p : products) {
-            System.out.println("Produkt: " + p.getProductName());
+            System.out.println("\nProdukt: " + p.getProductName());
             System.out.println("Pris: " + p.getProductPrice() + "kr");
             System.out.println("ID: " + p.getProductID());
             System.out.println();
         }
     }
-
     public static void printShoppingCart(ShoppingCart shoppingCart) {
         for (Product p : shoppingCart.getShoppingCart()) {
             System.out.println("Produkt: " + p.getProductName() + " (" + p.getProductPrice() + "kr)");
         }
     }
-
     public static void chooseProduct(Scanner sc, List<Product> products, ShoppingCart shoppingCart) {
-        System.out.println("Välj din vara genom att skriva produkt ID! Skriv 0 för att gå vidare till kassan.");
+        System.out.println("\nVälj din vara genom att skriva produkt ID! Skriv 0 för att gå vidare till kassan.");
         while (true) {
             System.out.print("Produkt ID: ");
 
@@ -93,12 +91,9 @@ public class Main {
                 System.out.println("Felaktig inmatning, ange en siffra");
                 continue;
             }
-
             if (item == 0) {
-                System.out.println("Avslutar\n");
                 break;
             }
-
             Product found = null;
             for (Product p : products) {
                 if (p.getProductID() == item) {
@@ -106,18 +101,14 @@ public class Main {
                     break;
                 }
             }
-
             if (found == null) {
                 System.out.println("Kunde inte hitta den produkten");
                 continue;
-            }
-
-            if (shoppingCart.addProduct(found)) {
+            }if (shoppingCart.addProduct(found)) {
                 System.out.println("Du lade till " + found.getProductName());
             } else {
                 System.out.println("Produkten lades ej till");
             }
-
         }
     }
 
@@ -133,7 +124,6 @@ public class Main {
         products.add(new Product(8, "Ost", 54.90));
         products.add(new Product(9, "Juice", 24.90));
         products.add(new Product(10, "Tomat", 2.90));
-
         return products;
     }
 }
