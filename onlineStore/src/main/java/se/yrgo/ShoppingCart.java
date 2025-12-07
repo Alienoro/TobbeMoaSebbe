@@ -28,7 +28,7 @@ public class ShoppingCart {
         double sum = 0;
 
         for (Product product : shoppingCart) {
-            sum += product.getProductPrice() * product.getProductQuantity();
+            sum += product.getProductPrice();
         }
 
         return sum;

@@ -123,16 +123,16 @@ public class Main {
 
     public static List<Product> createProducts() {
         List<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Äpple", 9.90, 1));
-        products.add(new Product(2, "Banan", 9.90, 1));
-        products.add(new Product(3, "Mjölk", 14.90, 1));
-        products.add(new Product(4, "Bröd", 21.90, 1));
-        products.add(new Product(5, "Ägg", 29.90, 1));
-        products.add(new Product(6, "Kaffe", 84.90, 1));
-        products.add(new Product(7, "Smör", 44.90, 1));
-        products.add(new Product(8, "Ost", 54.90, 1));
-        products.add(new Product(9, "Juice", 24.90, 1));
-        products.add(new Product(10, "Tomat", 2.90, 1));
+        products.add(new Product(1, "Äpple", 9.90));
+        products.add(new Product(2, "Banan", 9.90));
+        products.add(new Product(3, "Mjölk", 14.90));
+        products.add(new Product(4, "Bröd", 21.90));
+        products.add(new Product(5, "Ägg", 29.90));
+        products.add(new Product(6, "Kaffe", 84.90));
+        products.add(new Product(7, "Smör", 44.90));
+        products.add(new Product(8, "Ost", 54.90));
+        products.add(new Product(9, "Juice", 24.90));
+        products.add(new Product(10, "Tomat", 2.90));
 
         return products;
     }
