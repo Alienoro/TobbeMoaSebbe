@@ -51,7 +51,7 @@ public class Customer {
     public void viewOrderHistory() {
         List<Orders> orders = this.orderHistory();
         for (Orders order : orders) {
-            System.out.println("This is your Order-ID: " + order.getOrderID());
+            System.out.println("Detta är ditt Order-ID: " + order.getOrderID());
             for (Product orderProducts : order.getproductsOrdered()) {
                 System.out.println(orderProducts);
 
