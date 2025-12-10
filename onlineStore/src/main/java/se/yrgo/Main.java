@@ -32,33 +32,36 @@ public class Main {
             while (true) {
                 System.out.print("Vill du betala? (ja/nej): ");
                 String answer = sc.nextLine();
-                if (yesOrNo(answer)) {
+                if (yesOrNo(answer, true)) {
                     break;
                 }
             }
 
             customer.placeOrder(shoppingCart.getShoppingCart());
 
-            while (true) {
-                System.out.print("Vill du se din totala orderhistorik? (ja/nej): ");
-                String answer = sc.nextLine();
-                if (yesOrNo(answer)) {
-                    break;
-                }
+            System.out.print("Vill du se din totala orderhistorik? (ja/nej): ");
+            String answer = sc.nextLine();
+
+            if (answer.equalsIgnoreCase("ja")) {
+                customer.viewOrderHistory();
+                System.out.println("Välkommen tillbaka nästa gång!\n");
+            } else if (answer.equalsIgnoreCase("nej")) {
+                System.out.println("\nVälkommen tillbaka nästa gång!\n");
+            } else {
+                System.out.println("Felaktig inmatning");
             }
-
-            customer.viewOrderHistory();
-
-            System.out.println("Välkommen tillbaka nästa gång!");
         }
     }
 
-    public static boolean yesOrNo(String answer) {
+    public static boolean yesOrNo(String answer, boolean isPayment) {
         if (answer.equalsIgnoreCase("ja")) {
             return true;
         } else if (answer.equalsIgnoreCase("nej")) {
-            System.out.println("\nVälkommen tillbaka nästa gång!");
-            System.exit(0);
+            if (isPayment) {
+                System.out.println("\nOm du inte vill betala eskorterar vakten dig ut ur butiken.\n");
+                System.exit(0);
+            }
+            return false;
         } else {
             System.out.println("Felaktig inmatning");
         }
@@ -66,11 +69,39 @@ public class Main {
     }
 
     public static void printProducts(List<Product> products) {
+        int boxesPerRow = 3;
+        int count = 0;
+        StringBuilder top = new StringBuilder();
+        StringBuilder name = new StringBuilder();
+        StringBuilder price = new StringBuilder();
+        StringBuilder id = new StringBuilder();
+        StringBuilder bottom = new StringBuilder();
         for (Product p : products) {
-            System.out.println("\nProdukt: " + p.getProductName());
-            System.out.println("Pris: " + p.getProductPrice() + "kr");
-            System.out.println("ID: " + p.getProductID());
-            System.out.println();
+            top.append("┌──────────────────────┐     ");
+            name.append(String.format("│ Produkt: %-12s │     ", p.getProductName()));
+            price.append(String.format("│ Pris:    %-12s │     ", p.getProductPrice() + " kr"));
+            id.append(String.format("│ ID:      %-12s │     ", p.getProductID()));
+            bottom.append("└──────────────────────┘     ");
+            count++;
+            if (count % boxesPerRow == 0) {
+                System.out.println(top);
+                System.out.println(name);
+                System.out.println(price);
+                System.out.println(id);
+                System.out.println(bottom);
+                System.out.println();
+                top.setLength(0);
+                name.setLength(0);
+                price.setLength(0);
+                id.setLength(0);
+                bottom.setLength(0);
+            }
+        } if (!top.isEmpty()) {
+            System.out.println(top);
+            System.out.println(name);
+            System.out.println(price);
+            System.out.println(id);
+            System.out.println(bottom);
         }
     }
     public static void printShoppingCart(ShoppingCart shoppingCart) {
@@ -102,7 +133,7 @@ public class Main {
                 }
             }
             if (found == null) {
-                System.out.println("Kunde inte hitta den produkten");
+                System.out.println("Tyvärr har vi inte den produkten!");
                 continue;
             }if (shoppingCart.addProduct(found)) {
                 System.out.println("Du lade till " + found.getProductName());
@@ -124,6 +155,8 @@ public class Main {
         products.add(new Product(8, "Ost", 54.90));
         products.add(new Product(9, "Juice", 24.90));
         products.add(new Product(10, "Tomat", 2.90));
+        products.add(new Product(11, "Physalis", 29.90));
+        products.add(new Product(12, "Socker", 12.90));
         return products;
     }
 }
