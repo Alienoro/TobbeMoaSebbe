@@ -50,13 +50,27 @@ public class Customer {
 
     public void viewOrderHistory() {
         List<Orders> orders = this.orderHistory();
+        if (orders.isEmpty()) {
+            System.out.println("Du har inga tidigare beställningar.");
+            return;
+        }
         for (Orders order : orders) {
-            System.out.println("Detta är ditt Order-ID: " + order.getOrderID());
-            for (Product orderProducts : order.getproductsOrdered()) {
-                System.out.println(orderProducts);
+            System.out.println("\n========================================");
+            System.out.printf("ORDER #%s%n", order.getOrderID());
+            System.out.println("----------------------------------------");
+            System.out.printf("  %-20s %-6s%n", "Produkt", "Pris");
+            System.out.println("----------------------------------------");
+            double total = 0;
+            for (Product p : order.getproductsOrdered()) {
+                System.out.printf("  %-20s %-6s%n",
+                        p.getProductName(),
+                        p.getProductPrice() + " kr");
 
+                total += p.getProductPrice();
             }
-
+            System.out.println("----------------------------------------");
+            System.out.printf("  Ordervärde:%20.2f kr%n", total);
+            System.out.println("========================================\n");
         }
     }
 
